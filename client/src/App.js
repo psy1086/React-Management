@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Customer from './component/Customer';
 import Paper from '@material-ui/core/Paper';
@@ -65,7 +64,8 @@ class App extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            { this.state.customers ? this.state.customers.map(c =>{ return <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job}/>;
+            { this.state.customers ? this.state.customers.map(c =>{ 
+              return <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job}/>;
              }) : 
              <TableRow>
                 <TableCell colspan ="6" align="center">
@@ -75,7 +75,6 @@ class App extends Component {
              }
           </TableBody>
         </Table>
-        
       </Paper>
     );
   }
