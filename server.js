@@ -20,13 +20,33 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 
-app.get('/api/hello2', (req, res) => {
+const multer = require('multer');
+const upload = multer({dest : './upload'})
+
+app.get('/api/customers', (req, res) => {
     connection.query(
         "SELECT * FROM CUSTOMER",
         (err, rows, fields) => {
             res.send(rows);
         }
-    )
+    );
 });
+
+app.use('/image', express.static('./upload'));  //image 에서 upload접근
+
+app.post('/api/customers', upload.single('image'), (req, res) => {
+    let sql = 'INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?, ?)';
+    let image = '/image/' + req.file.filename;      //이미지 경로 + 파일 이름 (multer)
+    let name = req.body.name;
+    let birthday = req.body.birthday;
+    let gender = req.body.gender;
+    let job = req.body.job;
+    let params = [image, name, birthday, gender, job];
+    connection.query(sql, params,
+        (err, rows, fields) => {
+            res.send(rows);
+        }
+    );
+}); 
 
 app.listen(port,()=> console.log(`Listening on port ${port}`));
