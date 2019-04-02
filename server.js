@@ -35,7 +35,7 @@ app.get('/api/customers', (req, res) => {
 app.use('/image', express.static('./upload'));  //image 에서 upload접근
 
 app.post('/api/customers', upload.single('image'), (req, res) => {
-    let sql = 'INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?, ?, now(), 0';
+    let sql = 'INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?, ?, now(), 0)';
     let image = '/image/' + req.file.filename;      //이미지 경로 + 파일 이름 (multer)
     let name = req.body.name;
     let birthday = req.body.birthday;
